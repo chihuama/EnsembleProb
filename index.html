@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>EnsembleProb</title>
+
+    <link rel="stylesheet" type="text/css" href="src/main.css">
+
+    <script src="http://d3js.org/d3.v4.min.js" charset="utf-8"></script>
+    <script src="http://d3js.org/queue.v1.min.js"></script>
+
+    <script src="src/getPeaks.js"></script>
+    <script src="src/spaghettiPlots.js"></script>
+    <script src="src/trajectory.js"></script>
+    <script src="src/initData.js"></script>
+
+  </head>
+
+  <body onload="init()">
+
+    <div class="spaghettiDiv">
+      <div class="spaghettiA"> </div>
+      <div class="spaghettiB"> </div>
+      <div class="spaghettiC"> </div>
+    </div>
+
+    <div class="projectMapDiv"> </div>
+
+    <div class="detailDiv"> </div>
+
+    <div class="controlDiv">
+      <div class="checkPanel">
+        <label for="TIME_4_-2_4" style="background-color:#1b9e77">
+          <input type="checkbox" id="TIME_4_-2_4" checked onchange="checkbox(this.id, this.checked)"> TIME_4_-2_4 </input>
+        </label> <br>
+        <label for="TIME_4_-2_10" style="background-color:#d95f02">
+          <input type="checkbox" id="TIME_4_-2_10" checked onchange="checkbox(this.id, this.checked)"> TIME_4_-2_10 </input>
+        </label> <br>
+        <label for="TIME_4_3_4" style="background-color:#7570b3">
+          <input type="checkbox" id="TIME_4_3_4" checked onchange="checkbox(this.id, this.checked)"> TIME_4_3_4 </input>
+        </label> <br>
+        <label for="TIME_10_-2_4" style="background-color:#e7298a">
+          <input type="checkbox" id="TIME_10_-2_4" checked onchange="checkbox(this.id, this.checked)"> TIME_10_-2_4 </input>
+        </label> <br>
+        <label for="TIME_10_-2_10" style="background-color:#66a61e">
+          <input type="checkbox" id="TIME_10_-2_10" checked onchange="checkbox(this.id, this.checked)"> TIME_10_-2_10 </input>
+        </label> <br>
+        <label for="TIME_10_3_4" style="background-color:#e6ab02">
+          <input type="checkbox" id="TIME_10_3_4" checked onchange="checkbox(this.id, this.checked)"> TIME_10_3_4 </input>
+        </label> <br> <br>
+      <!-- </div>
+      <div class="optionPanel"> -->
+        <label for="Peak Trajectory"> <input type="checkbox" id="option0" checked onchange="radioption(this.id, this.checked)"> Peak Trajectory </input> </label> <br>
+        <label for="Time Curves"> <input type="checkbox" id="option1" onchange="radioption(this.id, this.checked)"> Time Curves </input> </label> <br> <br>
+        <!-- <label style="display:none"> <input type="checkbox" id="option2" onchange="radioption(this.id, this.checked)"> Heat Maps </input> </label> <br> -->
+      <!-- </div>
+      <div class="proteinChooser"> -->
+        <label> <input type="radio" id="ProteinAB" checked onclick="proteinoption(this.id, this.checked)"> ProteinA-ProteinB </input> </label> <br>
+        <label> <input type="radio" id="ProteinAC" onclick="proteinoption(this.id, this.checked)"> ProteinA-ProteinC </input> </label> <br>
+        <label> <input type="radio" id="ProteinBC" onclick="proteinoption(this.id, this.checked)"> ProteinB-ProteinC </input> </label>
+      </div>
+    </div>
+
+  </body>
+</html>
