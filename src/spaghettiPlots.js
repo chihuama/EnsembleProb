@@ -3,11 +3,8 @@
 function spaghettiPlots(where, type, ratio, data) {
   d3.select(where).selectAll("*").remove();
 
-  var w = window.innerWidth * ratio;
-  var h = window.innerHeight * 0.23;
-
-  // var w = window.clientWidth * ratio;
-  // var h = window.clientHeight * 0.22;
+  var w = 1600 * ratio;
+  var h = 800 * 0.23;
 
   var that = this;
 
