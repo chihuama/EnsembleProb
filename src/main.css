@@ -71,10 +71,10 @@
 
   color: black;
 	font-family: sans-serif;
-	font-size: 16px;
+	font-size: 14px;
 }
 
-.optionPanel{
+/*.optionPanel{
   position: absolute;
   left: 15%;
   top: 48%;
@@ -83,4 +83,4 @@
   position: absolute;
   left: 15%;
   top: 65%;
-}
+}*/
