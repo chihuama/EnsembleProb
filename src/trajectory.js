@@ -483,6 +483,15 @@ function timeCurvesDetail(where,ylabel, xlabel, row, col, data, index) {
     .style("stroke-width", 4);
 
 
+  for (var i=0; i<data.length; i++) {
+    if (d3.select("#"+runFolder[i]).property("checked")) {
+      d3.selectAll("#run"+i).style("display", "initial");
+    } else {
+      d3.selectAll("#run"+i).style("display", "none");
+    }
+  }
+
+
   // x/y labels
   var label = svg.append("text")
     .attr("x", margin.left + w/2)
