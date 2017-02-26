@@ -73,6 +73,8 @@ function loadAllFiles(error, Pa, Pb, Pc, Pab, Pac, Pbc, Pa2, Pb2, Pc2, Pab2, Pac
       console.log(error);
   }
 
+  console.log(arguments.length);
+
   var Pa_Peaks = getPeaks(Pa);
   var Pb_Peaks = getPeaks(Pb);
   var Pc_Peaks = getPeaks(Pc);

@@ -12,21 +12,25 @@
   <!-- Latest compiled JavaScript -->
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-  <link rel="stylesheet" type="text/css" href="src/style.css">
+  <link rel="stylesheet" type="text/css" href="src/css/style.css">
 
   <script src="http://d3js.org/d3.v4.min.js" charset="utf-8"></script>
   <script src="http://d3js.org/queue.v1.min.js"></script>
 
-  <script src="src/main.js"></script>
+  <script src="src/js/init.js"></script>
+  <script src="src/js/peaks.js"></script>
+  <script src="src/js/spaghettiPlots.js"></script>
+  <script src="src/js/projectionMap.js"></script>
+  <script src="src/js/control.js"></script>
 
 </head>
 
-<body>
+<body onload = "init()">
 
   <div class="container-fluid">
 
-    <div class="panel-primary">
-      <div class="panel-heading titlepanel">
+    <div>
+      <div class="titlepanel">
         <h3>EnsembleProb</h3>
       </div>
 
@@ -47,11 +51,9 @@
                 </div>
                 <div class="col-md-6 spaghettiC">
 
-                </div> 
-                
+                </div>
               </div>
             </div>
-            
           </div>
         </div>
 
@@ -63,10 +65,10 @@
               </div>
               <div class="panel-body probprojmapdiv">
 
-
               </div>
             </div>
           </div>
+
           <div class="col-md-2">
             <div class="row">
               <div class="panel-default">
@@ -74,7 +76,6 @@
                   <h5>Time Curves</h5>
                 </div>
                 <div class="panel-body timecurvesdiv">
-
 
                 </div>
               </div>
@@ -88,52 +89,50 @@
                 <div class="panel-body controldiv">
                   <div class="row inputrow">
                       <div class="checkbox">
-                        <label><input type="checkbox" value="">TIME_4_-2_4</label>
+                        <label><input type="checkbox" value="" id="0" checked onclick="checkRun(this. id, this.checked)">TIME_4_-2_4</label>
                       </div>
                       <div class="checkbox">
-                        <label><input type="checkbox" value="">TIME_4_-2_10</label>
+                        <label><input type="checkbox" value="" id="1" checked onclick="checkRun(this. id, this.checked)">TIME_4_-2_10</label>
                       </div>
                       <div class="checkbox">
-                        <label><input type="checkbox" value="">TIME_4_3_4</label>
+                        <label><input type="checkbox" value="" id="2" checked onclick="checkRun(this. id, this.checked)">TIME_4_3_4</label>
                       </div>
                       <div class="checkbox">
-                        <label><input type="checkbox" value="">TIME_10_-2_4</label>
+                        <label><input type="checkbox" value="" id="3" checked onclick="checkRun(this. id, this.checked)">TIME_10_-2_4</label>
                       </div>
                       <div class="checkbox">
-                        <label><input type="checkbox" value="">TIME_10_-2_10</label>
+                        <label><input type="checkbox" value="" id="4" checked onclick="checkRun(this. id, this.checked)">TIME_10_-2_10</label>
                       </div>
                       <div class="checkbox">
-                        <label><input type="checkbox" value="">TIME_10_3_4</label>
+                        <label><input type="checkbox" value="" id="5" checked onclick="checkRun(this. id, this.checked)">TIME_10_3_4</label>
                       </div>
                   </div>
                   <div class="row inputrow">
                      <div class="checkbox">
-                        <label><input type="checkbox" value="">Peak Trajectory</label>
+                        <label><input type="checkbox" value="" checked onclick="checkPeakTrajectory(this.checked)">Peak Trajectory</label>
                       </div>
                       <div class="checkbox">
-                        <label><input type="checkbox" value="">Time Curves</label>
+                        <label><input type="checkbox" value="" onclick="checkTimeCurves(this.checked)">Time Curves</label>
                       </div>
                   </div>
                   <div class="row inputrow">
                     <div class="radio">
-                      <label><input type="radio" name="optradio">ProteinA-ProteinB</label>
+                      <label><input type="radio" name="optradio" id="AB" checked onclick="chooseProteins(this.id, this.checked)">ProteinA-ProteinB</label>
                     </div>
                     <div class="radio">
-                      <label><input type="radio" name="optradio">ProteinA-ProteinC</label>
+                      <label><input type="radio" name="optradio" id="AC" onclick="chooseProteins(this.id, this.checked)">ProteinA-ProteinC</label>
                     </div>
                     <div class="radio">
-                      <label><input type="radio" name="optradio">ProteinB-ProteinC</label>
+                      <label><input type="radio" name="optradio" id="BC" onclick="chooseProteins(this.id, this.checked)">ProteinB-ProteinC</label>
                     </div>
                   </div>
-                  
-
                 </div>
               </div>
-            </div>            
+            </div>
           </div>
-        </div>
+        </div> <!-- Bottom row -->
 
-      </div>       
+      </div>
 
     </div>
 
