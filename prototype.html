@@ -3,21 +3,50 @@
   <head>
     <title>EnsembleProb</title>
 
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
     <script src="https://d3js.org/d3.v4.min.js" charset="utf-8"></script>
     <script src="https://d3js.org/queue.v1.min.js"></script>
     <script src="lib/three.min.js"></script>
 
-    <script src="src/js/init.js"></script>
-    <script src="src/js/trajectoryCube.js"></script>
+    <script src="src/js/prototype/main.js" charset="utf-8"></script>
+
+    <script src="src/js/peaks.js" charset="utf-8"></script>
+    <script src="src/js/prototype/trajectoryCube.js" charset="utf-8"></script>
 
   </head>
 
-  <body>
-    <script>
-      trajectoryCube();
-    </script>
+  <body onload="App.init()">
+    <div class="container-fluid">
 
-    <div class="peakTraCube">
+      <div class="row" id="allContent">
+
+        <div class="col-md-4" id="trajectoryCube">
+
+        </div>
+
+        <div class="col-md-4" id="projectionMap">
+
+        </div>
+
+        <div class="col-md-4">
+          <div class="row" id="timeCurves">
+
+          </div>
+          <div class="row" id="peakShapes">
+
+          </div>
+        </div>
+
+      </div>
+
     </div>
 
   </body>
