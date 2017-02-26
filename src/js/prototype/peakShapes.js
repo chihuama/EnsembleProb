@@ -1,4 +1,7 @@
-var peakShapes = (function() {
+var App = App || {};
+App.views = App.views || {};
+
+App.views.peakShapes = (function() {
   let targetElement = null;
 
   let size = null;

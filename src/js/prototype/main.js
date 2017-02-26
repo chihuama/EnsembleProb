@@ -24,7 +24,6 @@ var runFile = ["Pa_t100", "Pb_t100", "Pc_t100", "Pab_t100", "Pac_t100", "Pbc_t10
     loadData();
 
     // create views
-    App.views.trajectoryCube = trajectoryCube;
     App.views.trajectoryCube.create("trajectoryCube");
 
     // add event listener for resize

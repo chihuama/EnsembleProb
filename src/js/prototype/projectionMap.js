@@ -1,4 +1,7 @@
-var projectionMap = (function() {
+var App = App || {};
+App.views = App.views || {};
+
+App.views.projectionMap = (function() {
   let targetElement = null;
 
   let size = null;

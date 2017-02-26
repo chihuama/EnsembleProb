@@ -1,6 +1,7 @@
 var App = App || {};
+App.views = App.views || {};
 
-var trajectoryCube = (function() {
+App.views.trajectoryCube = (function() {
   let targetElement = null;
   let scene = null;
   let camera = null;

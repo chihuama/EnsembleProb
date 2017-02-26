@@ -1,4 +1,7 @@
-var timeCurves = (function() {
+var App = App || {};
+App.views = App.views || {};
+
+App.views.timeCurves = (function() {
   let targetElement = null;
 
   let size = null;
