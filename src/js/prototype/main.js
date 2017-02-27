@@ -20,13 +20,18 @@ var runFile = ["Pa_t100", "Pb_t100", "Pc_t100", "Pab_t100", "Pac_t100", "Pbc_t10
 
     // create views
     App.views.trajectoryCube.create("trajectoryCube");
+    App.views.projectionMap.create("projectionMap");
+    App.views.timeCurves.create("timeCurves");
+    App.views.peakShapes.create("peakShapes");
 
     // time slider
-    timeSlider("timeSlider", 0);
+    App.timeSlider = new timeSlider("timeSlider", 0);
+    App.timeSlider.attachTimeUpdateCallback(updateViewsWithTimeSelection);
 
     // add event listener for resize
     window.addEventListener('resize', resizeViews);
   };
+
 
   function loadData() {
     App.data = {
@@ -78,6 +83,7 @@ var runFile = ["Pa_t100", "Pb_t100", "Pc_t100", "Pab_t100", "Pac_t100", "Pbc_t10
     updateViewsWithData([probData, peaksData]);
   }
 
+
   function updateViewsWithData(data) {
     let views = App.views;
 
@@ -89,12 +95,19 @@ var runFile = ["Pa_t100", "Pb_t100", "Pc_t100", "Pab_t100", "Pac_t100", "Pbc_t10
     setInterval(views.trajectoryCube.draw, 10);
   }
 
+
   function resizeViews() {
     let views = App.views;
 
     for (let view in views) {
       views[view].size = views[view].resize();
     }
+  }
+
+
+  function updateViewsWithTimeSelection(timestep) {
+    // do something
+
   }
 
 })();
