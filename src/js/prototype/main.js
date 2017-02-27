@@ -13,12 +13,7 @@ var runFile = ["Pa_t100", "Pb_t100", "Pc_t100", "Pab_t100", "Pac_t100", "Pbc_t10
 (function() {
   console.log("In iife in main.js");
 
-  App.views = App.views || {
-    trajectoryCube: {},
-    projectionMap:  {},
-    timeCurves:     {},
-    peakShapes:     {}
-  };
+  App.views = App.views || {};
 
   App.init = function() {
     loadData();
@@ -75,14 +70,16 @@ var runFile = ["Pa_t100", "Pb_t100", "Pc_t100", "Pab_t100", "Pac_t100", "Pbc_t10
       }
     }
 
-    updateViewsWithData();
+    console.log(peaksData[0]);
+
+    updateViewsWithData([probData, peaksData]);
   }
 
   function updateViewsWithData(data) {
     let views = App.views;
 
     for (let view in views) {
-      views[view].size = views[view].setData(data);
+      views[view].setData(data);
       views[view].draw();
     }
   }
