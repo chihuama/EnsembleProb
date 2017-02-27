@@ -20,6 +20,9 @@ var runFile = ["Pa_t100", "Pb_t100", "Pc_t100", "Pab_t100", "Pac_t100", "Pbc_t10
 
     // create views
     App.views.trajectoryCube.create("trajectoryCube");
+    App.views.projectionMap.create("projectionMap");
+    App.views.timeCurves.create("timeCurves");
+    App.views.peakShapes.create("peakShapes");
 
     // add event listener for resize
     window.addEventListener('resize', resizeViews);
