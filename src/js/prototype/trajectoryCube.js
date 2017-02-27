@@ -20,6 +20,7 @@ App.views.trajectoryCube = (function() {
     targetElement = document.getElementById(targetID);
     scene = new THREE.Scene();
     group = new THREE.Group();
+    scene.add(group);
 
     calculateNewComponentSize();
 
@@ -27,7 +28,6 @@ App.views.trajectoryCube = (function() {
     createRenderer();
 
     // resize();
-    // render();
   }
 
 
@@ -50,7 +50,6 @@ App.views.trajectoryCube = (function() {
     if (bbox) {
       bbox.remove();
     }
-
     let box = new THREE.BoxGeometry(numberOfStatesX, TIME_STEP, numberOfStatesY);
     let geometry = new THREE.EdgesGeometry( box );
     let material = new THREE.LineBasicMaterial({ color: 0x0000ff, linewidth: 2 });
@@ -74,8 +73,8 @@ App.views.trajectoryCube = (function() {
           for (let trajEndCoord of Object.keys(timeStepTraj[t][trajStartCoord].to)) {
             let trajEnd = timeStepTraj[t][trajStartCoord].to[trajEndCoord]
 
-            let startCoord = new THREE.Vector3(trajStart.coord.x - numX / 2, t - TIME_STEP/2, numY / 2 - trajStart.coord.y);
-            let endCoord = new THREE.Vector3(trajEnd.coord.x - numX / 2, t + 1 - TIME_STEP/2, numY / 2 - trajEnd.coord.y);
+            let startCoord = new THREE.Vector3(trajStart.coord.x - numX/2, t - TIME_STEP/2, numY/2 - trajStart.coord.y);
+            let endCoord = new THREE.Vector3(trajEnd.coord.x - numX/2, t + 1 - TIME_STEP/2, numY/2 - trajEnd.coord.y);
 
             let geometry = new THREE.Geometry();
             geometry.vertices.push(startCoord, endCoord);
@@ -90,20 +89,11 @@ App.views.trajectoryCube = (function() {
       }
     }
 
-    // test
-    // let material = new THREE.LineBasicMaterial({ color: 0x00ff00, linewidth: 2 });
-    // let geo = new THREE.Geometry();
-    // geo.vertices.push(new THREE.Vector3(0 , 0, 10));
-    // geo.vertices.push(new THREE.Vector3(0 , 50, 10));
-    //
-    // let l = new THREE.Line(geo, material);
-    // group.add(l);
-
   }
 
 
   function render() {
-    group.rotation.y += 0.9;
+    group.rotation.y += 0.005;
     scene.add(group);
     renderer.render(scene, camera);
   }
