@@ -20,6 +20,7 @@ App.views.trajectoryCube = (function() {
     targetElement = document.getElementById(targetID);
     scene = new THREE.Scene();
     group = new THREE.Group();
+    scene.add(group);
 
     calculateNewComponentSize();
 
@@ -27,7 +28,6 @@ App.views.trajectoryCube = (function() {
     createRenderer();
 
     // resize();
-    // render();
   }
 
 
@@ -50,7 +50,6 @@ App.views.trajectoryCube = (function() {
     if (bbox) {
       bbox.remove();
     }
-
     let box = new THREE.BoxGeometry(numberOfStatesX, TIME_STEP, numberOfStatesY);
     let geometry = new THREE.EdgesGeometry( box );
     let material = new THREE.LineBasicMaterial({ color: 0x0000ff, linewidth: 2 });
@@ -93,7 +92,7 @@ App.views.trajectoryCube = (function() {
 
 
   function render() {
-    group.rotation.y += 0.02;
+    group.rotation.y += 0.005;
     scene.add(group);
     renderer.render(scene, camera);
   }
