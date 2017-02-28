@@ -96,7 +96,7 @@ timeSlider.prototype.drawLabel = function() {
 
   let yScale = d3.scaleLinear()
     .domain([0, TIME_STEP-1])
-    .range([this.height-this.handleHeigh, this.handleHeight]);
+    .range([this.height-this.handleHeighgh, this.handleHeight]);
 
   let label = this.svg.selectAll("text")
     .data(labels)
