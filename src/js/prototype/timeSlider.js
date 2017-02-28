@@ -92,11 +92,11 @@ timeSlider.prototype.curTimeLabel = function(pos) {
 
 
 timeSlider.prototype.drawLabel = function() {
-  let labels = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
+  let labels = [-1, 0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
 
   let yScale = d3.scaleLinear()
     .domain([0, TIME_STEP-1])
-    .range([this.height-this.handleHeighgh, this.handleHeight]);
+    .range([this.height, this.handleHeight]);
 
   let label = this.svg.selectAll("text")
     .data(labels)
