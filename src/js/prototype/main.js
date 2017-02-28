@@ -86,10 +86,21 @@ var runFile = ["Pa_t100", "Pb_t100", "Pc_t100", "Pab_t100", "Pac_t100", "Pbc_t10
 
     // calculate 1d min/max
     for (let protein in peaksData) {
+      let maxBoundary = probData[protein][0].length;
+      let minBoundary = 0;
+
       minsMaxs1d[protein] = {
-        min: d3.min(peaksData[protein], run => d3.min(run, timestep => d3.min(timestep, t => t.index))),
-        max: d3.max(peaksData[protein], run => d3.max(run, timestep => d3.max(timestep, t => t.index)))
+        min: d3.min(peaksData[protein], run => d3.min(run, timestep => d3.min(timestep, t => t.index))) - 3,
+        max: d3.max(peaksData[protein], run => d3.max(run, timestep => d3.max(timestep, t => t.index))) + 3
       };
+
+      if (minsMaxs1d[protein].min < minBoundary) {
+        minsMaxs1d[protein].min = minBoundary;
+      }
+
+      if (minsMaxs1d[protein].max > maxBoundary) {
+        minsMaxs1d[protein].max = maxBoundary;
+      }
     }
 
     // project to 2d from 1d min/max
