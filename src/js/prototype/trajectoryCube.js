@@ -38,6 +38,7 @@ App.views.trajectoryCube = (function() {
 
 
   function addCamera() {
+    // camera = new THREE.OrthographicCamera( size.width / - 2, size.width / 2, size.height / 2, size.height / - 2, 1, 1000 );
     camera = new THREE.PerspectiveCamera( 110, size.width / size.height, 0.1, 1000 );
     camera.position.set(0, 0, 50);
     // camera.rotation.y = 180 * Math.PI / 180;
