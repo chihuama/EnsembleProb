@@ -46,6 +46,11 @@
           <div class="contentDiv" id="trajectoryCube">
 
           </div>
+          <div class="controldiv" id="button">
+            <input type="button" id="rotateButton" value="rotate" onclick="App.views.trajectoryCube.rotate(this.id, this.value)"></input>
+            <input type="button" value="zoom in" onclick="App.views.trajectoryCube.zoomIn()"></input>
+            <input type="button" value="zoom out" onclick="App.views.trajectoryCube.zoomOut()"></input>
+          </div>
         </div>
 
         <div class="col-md-4">

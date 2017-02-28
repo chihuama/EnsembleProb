@@ -18,6 +18,8 @@ App.views.trajectoryCube = (function() {
   let numX;
   let numY;
 
+  let isRotating = false;
+
 
   function setupView(targetID) {
     targetElement = document.getElementById(targetID);
@@ -40,7 +42,7 @@ App.views.trajectoryCube = (function() {
   function addCamera() {
     // camera = new THREE.OrthographicCamera( size.width / - 2, size.width / 2, size.height / 2, size.height / - 2, 1, 1000 );
     camera = new THREE.PerspectiveCamera( 110, size.width / size.height, 0.1, 1000 );
-    camera.position.set(0, 0, 50);
+    camera.position.set(0, 0, 100);
     camera.lookAt(new THREE.Vector3(0, 0, 0));
   }
 
@@ -146,7 +148,9 @@ App.views.trajectoryCube = (function() {
 
 
   function render() {
-    group.rotation.y += 0.002;
+    if (isRotating) {
+      group.rotation.y += 0.002;
+    }
     renderer.render(scene, camera);
   }
 
@@ -156,12 +160,12 @@ App.views.trajectoryCube = (function() {
     // Pa: data[1][0][0~5], Pb: data[1][1][0~5], Pc: data[1][2][0~5]
 
     // project to A & B
-    let y = numY = data[0][0][0].length;
-    let x = numX = data[0][1][0].length;
+    let y = numY = data[0][1][0].length;
+    let x = numX = data[0][2][0].length;
 
     // extract path information between timesteps from full peak data
-    let yData = data[1][0]; // a
-    let xData = data[1][1]; // b
+    let yData = data[1][1]; // a
+    let xData = data[1][2]; // b
 
     timeStepTraj = new Array(TIME_STEP - 1);
 
@@ -241,6 +245,20 @@ App.views.trajectoryCube = (function() {
     return size;
   }
 
+  function rotate(id, val) {
+    isRotating = !isRotating;
+    d3.select("#"+id).attr("value", isRotating ? "pause" : "rotate");
+    // setInterval(render, 10);
+  }
+
+  function zoomIn() {
+    camera.position.z -= 5;
+  }
+
+  function zoomOut() {
+    camera.position.z += 5;
+  }
+
 
   // return public methods
   return {
@@ -251,7 +269,10 @@ App.views.trajectoryCube = (function() {
     // getter / setter
     setData: setData,
     getSize: getSize,
-    updateTimeSelector: updateTimeSelector
+    updateTimeSelector: updateTimeSelector,
+    rotate: rotate,
+    zoomIn: zoomIn,
+    zoomOut: zoomOut
   };
 
 })();
