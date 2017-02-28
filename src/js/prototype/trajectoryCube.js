@@ -10,6 +10,9 @@ App.views.trajectoryCube = (function() {
   let group = null;
   let bbox = null;
 
+  let timeSelector = null;
+  let curPeak = null;
+
   let size = null;
 
   let timeStepTraj = null;
@@ -21,6 +24,9 @@ App.views.trajectoryCube = (function() {
     scene = new THREE.Scene();
     group = new THREE.Group();
     scene.add(group);
+
+    curPeak = new THREE.Group();
+    group.add(curPeak);
 
     calculateNewComponentSize();
 
@@ -81,7 +87,6 @@ App.views.trajectoryCube = (function() {
 
             line = new THREE.Line(geometry, materials[trajEnd.count-1]);
 
-            // scene.add(line);
             group.add(line);
 
           }
@@ -92,9 +97,57 @@ App.views.trajectoryCube = (function() {
   }
 
 
+  function createTimeSelector(numberOfStatesX, numberOfStatesY, timestep) {
+    let box = new THREE.BoxGeometry(numberOfStatesX, 1, numberOfStatesY);
+    let geometry = new THREE.EdgesGeometry( box );
+    let material = new THREE.LineBasicMaterial({ color: 0xffffff, linewidth: 2 });
+    timeSelector = new THREE.LineSegments( geometry, material );
+    timeSelector.position.setY(timestep - TIME_STEP/2);
+    group.add( timeSelector );
+
+    // highlightPeak(timestep);
+  }
+
+  function updateTimeSelector(timestep) {
+    timeSelector.position.setY(timestep - TIME_STEP/2);
+
+    // highlightPeak(timestep);
+  }
+
+
+  function highlightPeak(timestep) {
+    if (curPeak) {
+      console.log(curPeak);
+      curPeak.children.forEach((child) => {
+        curPeak.remove(child)
+      })
+    }
+
+    // suggestion: move spheres which are already added, add spheres if you have too few, remove ifyou have too many
+    // maybe too much adding and removing makes it slow..
+
+    let material = new THREE.MeshBasicMaterial( { color: 0xffff00 });
+
+    if (timeStepTraj) {
+      for (let trajStartCoord of Object.keys(timeStepTraj[timestep])) {
+        let trajCoord = timeStepTraj[timestep][trajStartCoord];
+
+        let geometry = new THREE.SphereGeometry(0.5, 50, 50);
+        let sphere = new THREE.Mesh( geometry, material );
+
+        sphere.position.setX(trajCoord.coord.x - numX/2);
+        sphere.position.setY(timestep - TIME_STEP/2);
+        sphere.position.setZ(numY/2 - trajCoord.coord.y);
+
+        curPeak.add(sphere);
+      }
+    }
+
+  }
+
+
   function render() {
-    group.rotation.y += 0.005;
-    scene.add(group);
+    group.rotation.y += 0.002;
     renderer.render(scene, camera);
   }
 
@@ -166,6 +219,7 @@ App.views.trajectoryCube = (function() {
 
     createBoundingBox(x, y);
     createTrajectory();
+    createTimeSelector(x, y, 0);
   }
 
 
@@ -198,6 +252,7 @@ App.views.trajectoryCube = (function() {
     // getter / setter
     setData: setData,
     getSize: getSize,
+    updateTimeSelector: updateTimeSelector
   };
 
 })();

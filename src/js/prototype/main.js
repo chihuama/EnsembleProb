@@ -25,7 +25,7 @@ var runFile = ["Pa_t100", "Pb_t100", "Pc_t100", "Pab_t100", "Pac_t100", "Pbc_t10
     App.views.peakShapes.create("peakShapes");
 
     // time slider
-    App.timeSlider = new timeSlider("timeSlider", 0);
+    App.timeSlider = new timeSlider("#timeSlider", 0);
     App.timeSlider.attachTimeUpdateCallback(updateViewsWithTimeSelection);
 
     // add event listener for resize
@@ -107,7 +107,7 @@ var runFile = ["Pa_t100", "Pb_t100", "Pc_t100", "Pab_t100", "Pac_t100", "Pbc_t10
 
   function updateViewsWithTimeSelection(timestep) {
     // do something
-
+    App.views.trajectoryCube.updateTimeSelector(timestep);
   }
 
 })();
