@@ -37,6 +37,39 @@ App.views.projectionMap = (function() {
     // extract projection->run->peak data for only the current timestep
     let currentPeaks = fullData[1].map(proj => proj.map(run => run[currentTimestep]));
 
+    let xPeaks = currentPeaks[xProjection];
+    let yPeaks = currentPeaks[yProjection];
+
+    let peakPairDictionary = {};
+    let peakPairs = [];
+
+    for (let run = 0; run < RUN_NUM; run++) {
+      for (let x of xPeaks[run]) {
+        for (let y of yPeaks[run]) {
+          let coordString = "x" + x.index + "y" + y.index;
+
+          if (!peakPairDictionary[coordString]) {
+            peakPairDictionary[coordString] = {
+              coord: {
+                x: x.index,
+                y: y.index
+              },
+              runs: []
+            };
+          }
+
+          // add this run to the run list for the peak at this coordinate
+          peakPairDictionary[coordString].runs.push(run);
+        }
+      }
+    }
+
+    for (let loc of Object.keys(peakPairDictionary)) {
+      peakPairs.push(peakPairDictionary[loc]);
+    }
+
+    console.log(peakPairs);
+
     console.log("Timestep:", currentTimestep, "Peak Data:", currentPeaks);
   }
 

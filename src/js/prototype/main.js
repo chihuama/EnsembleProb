@@ -80,6 +80,37 @@ var runFile = ["Pa_t100", "Pb_t100", "Pc_t100", "Pab_t100", "Pac_t100", "Pbc_t10
 
     console.log(peaksData[0]);
 
+    // find min and max coordinates to draw for different projections
+    let minsMaxs1d = new Array(3);
+    let minsMaxs2d = new Array(3);
+
+    // calculate 1d min/max
+    for (let protein in peaksData) {
+      minsMaxs1d[protein] = {
+        min: d3.min(peaksData[protein], run => d3.min(run, timestep => d3.min(timestep, t => t.index))),
+        max: d3.max(peaksData[protein], run => d3.max(run, timestep => d3.max(timestep, t => t.index)))
+      };
+    }
+
+    // project to 2d from 1d min/max
+    for (let x = 0; x < 3; x++) {
+      minsMaxs2d[x] = new Array(3);
+      for (let y = 0; y < 3; y++) {
+        minsMaxs2d[x][y] = {
+          x: minsMaxs1d[x],
+          y: minsMaxs1d[y]
+        };
+      }
+    }
+
+    App.data.projectionDimensions = {
+      oneD: minsMaxs1d,
+      // [x][y]
+      twoD: minsMaxs2d
+    };
+
+    console.log("Projection dimensions:", App.data.projectionDimensions);
+
     updateViewsWithData([probData, peaksData]);
   }
 
