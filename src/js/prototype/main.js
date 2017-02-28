@@ -18,6 +18,12 @@ var runFile = ["Pa_t100", "Pb_t100", "Pc_t100", "Pab_t100", "Pac_t100", "Pbc_t10
   App.init = function() {
     loadData();
 
+    App.currentProjection = {
+      x: 2,
+      y: 1
+    };
+
+
     // create views
     App.views.trajectoryCube.create("trajectoryCube");
     App.views.projectionMap.create("projectionMap");
@@ -114,13 +120,39 @@ var runFile = ["Pa_t100", "Pb_t100", "Pc_t100", "Pab_t100", "Pac_t100", "Pbc_t10
       }
     }
 
-    App.data.projectionDimensions = {
+    App.data.projectionBounds = {
       oneD: minsMaxs1d,
       // [x][y]
       twoD: minsMaxs2d
     };
 
-    console.log("Projection dimensions:", App.data.projectionDimensions);
+    console.log("Projection bounds:", App.data.projectionBounds);
+
+    // get total state space size for all projections
+    let stateSpaceSize1d = new Array(3);
+    let stateSpaceSize2d = new Array(3);
+
+    for (let protein in peaksData) {
+      stateSpaceSize1d[protein] = probData[protein][0].length;
+    }
+
+    for (let x = 0; x < 3; x++) {
+      stateSpaceSize2d[x] = new Array(3);
+      for (let y = 0; y < 3; y++) {
+        stateSpaceSize2d[x][y] = {
+          x: stateSpaceSize1d[x],
+          y: stateSpaceSize1d[y]
+        };
+      }
+    }
+
+    App.data.stateSpaceSize = {
+      oneD: stateSpaceSize1d,
+      // [x][y]
+      twoD: stateSpaceSize2d
+    };
+
+    console.log("State space size:", App.data.stateSpaceSize);
 
     updateViewsWithData([probData, peaksData]);
   }
@@ -151,6 +183,7 @@ var runFile = ["Pa_t100", "Pb_t100", "Pc_t100", "Pab_t100", "Pac_t100", "Pbc_t10
   function updateViewsWithTimeSelection(timestep) {
     // do something
     App.views.trajectoryCube.updateTimeSelector(timestep);
+    App.views.projectionMap.setTimestep(timestep);
   }
 
 })();

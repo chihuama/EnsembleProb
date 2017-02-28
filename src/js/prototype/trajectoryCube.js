@@ -159,9 +159,9 @@ App.views.trajectoryCube = (function() {
     // data[0]: probVal, data[1]: peakInfo
     // Pa: data[1][0][0~5], Pb: data[1][1][0~5], Pc: data[1][2][0~5]
 
-    // project to A & B
-    let y = numY = data[0][1][0].length;
-    let x = numX = data[0][2][0].length;
+    // project to B & C
+    let y = numY = data[0][App.currentProjection.y][0].length;
+    let x = numX = data[0][App.currentProjection.x][0].length;
 
     // extract path information between timesteps from full peak data
     let yData = data[1][1]; // a
