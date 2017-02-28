@@ -71,8 +71,6 @@ App.views.projectionMap = (function() {
     let yStart = d3.max([Math.ceil(gridDimensions.height[0]), 0]),
       yEnd = d3.min([Math.floor(gridDimensions.height[1]), stateSpaceSize.y]);
 
-    console.log(xStart, xEnd, yStart, yEnd);
-
     if (!grid) {
       grid = svg.append("g")
         .attr("class", targetElement + "_grid");
@@ -104,8 +102,6 @@ App.views.projectionMap = (function() {
       peaks = svg.append("g")
         .attr("class", targetElement + "_peaks");
     }
-
-    console.log(currentPeaks);
 
     let peakUpdate = peaks.selectAll(".peak")
       .data(currentPeaks);

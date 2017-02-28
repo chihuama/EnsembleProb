@@ -119,6 +119,10 @@ App.views.trajectoryCube = (function() {
 
   function highlightPeak(timestep) {
 
+
+    curPeak.children.forEach((child) => {
+      curPeak.remove(child);
+    })
     group.remove(curPeak);
 
     curPeak = new THREE.Group();
@@ -144,6 +148,7 @@ App.views.trajectoryCube = (function() {
     }
 
     group.add(curPeak);
+    render();
   }
 
 
