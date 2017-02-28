@@ -164,8 +164,8 @@ App.views.trajectoryCube = (function() {
     let x = numX = data[0][App.currentProjection.x][0].length;
 
     // extract path information between timesteps from full peak data
-    let yData = data[1][1]; // a
-    let xData = data[1][2]; // b
+    let yData = data[1][App.currentProjection.y]; // a
+    let xData = data[1][App.currentProjection.x]; // b
 
     timeStepTraj = new Array(TIME_STEP - 1);
 

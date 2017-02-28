@@ -20,7 +20,7 @@ var runFile = ["Pa_t100", "Pb_t100", "Pc_t100", "Pab_t100", "Pac_t100", "Pbc_t10
 
     App.currentProjection = {
       x: 2,
-      y: 1
+      y: 0
     };
 
 
@@ -184,6 +184,7 @@ var runFile = ["Pa_t100", "Pb_t100", "Pc_t100", "Pab_t100", "Pac_t100", "Pbc_t10
     // do something
     App.views.trajectoryCube.updateTimeSelector(timestep);
     App.views.projectionMap.setTimestep(timestep);
+    App.views.timeCurves.setTimestep(timestep);
   }
 
 })();
