@@ -9,8 +9,8 @@ App.views.projectionMap = (function() {
 
   let fullData = null;
   let currentTimestep = 0;
-  let xProjection = 0;
-  let yProjection = 1;
+  let xProjection = 1;
+  let yProjection = 0;
 
   function setupView(targetID) {
     targetElement = d3.select("#" + targetID);
@@ -34,6 +34,51 @@ App.views.projectionMap = (function() {
 
     // let currentProb = fullData[0][currentTimestep];
 
+    let currentPeaks = aggregatePeaksInTimestep();
+    // draw grid
+    let maxPeakBound = App.data.projectionDimensions.twoD[xProjection][yProjection];
+
+    // calculate what the shown dimensions will be (since the apsect ratios may be different)
+    let gridDimensions = calculateShownGridDimensions(maxPeakBound);
+
+    console.log("Peaks:", currentPeaks, "Grid:", gridDimensions);
+
+
+  }
+
+  function calculateShownGridDimensions(projectionBounds) {
+    let svgAspect = size.width / size.height;
+    let dataAspect = (projectionBounds.x.max - projectionBounds.x.min) / (projectionBounds.y.max - projectionBounds.y.min);
+
+    let spacesShown = {};
+
+    // data is wider than svg
+    if (dataAspect >= svgAspect) {
+      // expand height, width stays same
+      spacesShown.width = [projectionBounds.x.min, projectionBounds.x.max];
+
+      let numSpacesHigh = (projectionBounds.x.max - projectionBounds.x.min) / svgAspect;
+
+      spacesShown.height = [
+        (projectionBounds.y.max + projectionBounds.y.min - numSpacesHigh) / 2,
+        (projectionBounds.y.max + projectionBounds.y.min + numSpacesHigh) / 2
+      ];
+    } else {
+      // expand width, height stays same
+      spacesShown.height = [projectionBounds.y.min, projectionBounds.y.max];
+
+      let numSpacesWide = svgAspect * (projectionBounds.y.max - projectionBounds.y.min);
+
+      spacesShown.width = [
+        (projectionBounds.x.max + projectionBounds.x.min - numSpacesWide) / 2,
+        (projectionBounds.x.max + projectionBounds.x.min + numSpacesWide) / 2
+      ];
+    }
+
+    return spacesShown;
+  }
+
+  function aggregatePeaksInTimestep() {
     // extract projection->run->peak data for only the current timestep
     let currentPeaks = fullData[1].map(proj => proj.map(run => run[currentTimestep]));
 
@@ -68,9 +113,7 @@ App.views.projectionMap = (function() {
       peakPairs.push(peakPairDictionary[loc]);
     }
 
-    console.log(peakPairs);
-
-    console.log("Timestep:", currentTimestep, "Peak Data:", currentPeaks);
+    return peakPairs;
   }
 
   function setData(data) {
