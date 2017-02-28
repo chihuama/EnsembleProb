@@ -24,7 +24,7 @@ function timeSlider(where, curTime) {
 
 timeSlider.prototype.drawSliderBar = function() {
   let sliderBar = this.svg.append("rect")
-    .attr("x", this.width * 0.4)
+    .attr("x", this.width * 0.5)
     .attr("y", 0)
     .attr("width", this.width * 0.1)
     .attr("height", this.height)
@@ -43,13 +43,16 @@ timeSlider.prototype.drawSliderHandle = function() {
       _this.releaseHandle(this);
     });
 
+  let handleY = (this.height - this.handleHeight) * (1 - this.curTime / (TIME_STEP-1));
   let sliderHandel = this.svg.append("rect")
-    .attr("x", this.width * 0.3)
-    .attr("y", (this.height - this.handleHeight) * (1 - this.curTime / (TIME_STEP-1)))
+    .attr("x", this.width * 0.4)
+    .attr("y", handleY)
     .attr("width", this.handleWidth)
     .attr("height", this.handleHeight)
     .style("fill", "darkgray")
     .call(drag);
+
+  this.curTimeLabel(handleY);
 }
 
 
@@ -60,9 +63,14 @@ timeSlider.prototype.dragHandle = function(obj) {
 
   d3.select(obj).attr("y", newY);
 
-  this.curTime = Math.round( (1 - newY / (this.height-this.handleHeight) ) * (TIME_STEP-1) );
+  let newTimestepSelection = Math.round( (1 - newY / (this.height-this.handleHeight) ) * (TIME_STEP-1) );
 
-  this.updateCallback(this.curTime);
+  if ( newTimestepSelection != this.curTime ) {
+    this.curTime = newTimestepSelection;
+    this.updateCallback(this.curTime);
+  }
+
+  this.curTimeLabel(newY);
 }
 
 timeSlider.prototype.releaseHandle = function(obj) {
@@ -70,27 +78,46 @@ timeSlider.prototype.releaseHandle = function(obj) {
 }
 
 
+timeSlider.prototype.curTimeLabel = function(pos) {
+  d3.selectAll(".timeLabel").remove();
+
+  let curTimeLabel = this.svg.append("text")
+    .attr("class", "timeLabel")
+    .attr("x", this.width * 0.75)
+    .attr("y", pos + this.handleHeight)
+    .text("" + this.curTime)
+    .style("text-anchor", "start")
+    .style("font-size", "12px");
+}
+
+
 timeSlider.prototype.drawLabel = function() {
-  let labels = [];
+  let labels = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
 
   let yScale = d3.scaleLinear()
     .domain([0, TIME_STEP-1])
-    .range([this.height, 0]);
+    .range([this.height-this.handleHeigh, this.handleHeight]);
 
-  // let label = this.svg.selectAll("text")
-  //   .data(labels)
-  //   .enter()
-  //   .append("text")
-  //   .attr("x", )
-  //   .attr("y", (d) => {
-  //     return ;
-  //   })
-  //   .text((d) => {
-  //     return d;
-  //   })
-  //   .style("font-size", "12px");
+  let label = this.svg.selectAll("text")
+    .data(labels)
+    .enter()
+    .append("text")
+    .attr("x", this.width * 0.25)
+    .attr("y", yScale)
+    .text((d) => {
+      return d;
+    })
+    .style("text-anchor", "end")
+    .style("font-size", "12px");
 }
 
+timeSlider.prototype.resize = function() {
+  this.width = this.container.node().clientWidth;
+  this.height = this.width * 6.8;
+
+  this.svg.attr("width", this.width)
+    .attr("height", this.height)
+}
 
 timeSlider.prototype.attachTimeUpdateCallback = function(callback) {
   this.updateCallback = callback;

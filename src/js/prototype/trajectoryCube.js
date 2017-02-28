@@ -6,7 +6,6 @@ App.views.trajectoryCube = (function() {
   let scene = null;
   let camera = null;
 
-
   let group = null;
   let bbox = null;
 
@@ -18,6 +17,7 @@ App.views.trajectoryCube = (function() {
   let timeStepTraj = null;
   let numX;
   let numY;
+
 
   function setupView(targetID) {
     targetElement = document.getElementById(targetID);
@@ -41,7 +41,6 @@ App.views.trajectoryCube = (function() {
     // camera = new THREE.OrthographicCamera( size.width / - 2, size.width / 2, size.height / 2, size.height / - 2, 1, 1000 );
     camera = new THREE.PerspectiveCamera( 110, size.width / size.height, 0.1, 1000 );
     camera.position.set(0, 0, 50);
-    // camera.rotation.y = 180 * Math.PI / 180;
     camera.lookAt(new THREE.Vector3(0, 0, 0));
   }
 
@@ -71,7 +70,7 @@ App.views.trajectoryCube = (function() {
     let colorMap = ['#ffffb2','#fed976','#feb24c','#fd8d3c','#f03b20','#bd0026'];
     let materials = colorMap.map((hex) => new THREE.LineBasicMaterial({ color: hex, linewidth: 2 }) );
 
-    console.log(materials);
+    // console.log(materials);
 
     if (timeStepTraj) {
       for (let t = 0; t < TIME_STEP - 1; t++) {
@@ -106,23 +105,21 @@ App.views.trajectoryCube = (function() {
     timeSelector.position.setY(timestep - TIME_STEP/2);
     group.add( timeSelector );
 
-    // highlightPeak(timestep);
+    highlightPeak(timestep);
   }
 
   function updateTimeSelector(timestep) {
     timeSelector.position.setY(timestep - TIME_STEP/2);
 
-    // highlightPeak(timestep);
+    highlightPeak(timestep);
   }
 
 
   function highlightPeak(timestep) {
-    if (curPeak) {
-      console.log(curPeak);
-      curPeak.children.forEach((child) => {
-        curPeak.remove(child)
-      })
-    }
+
+    group.remove(curPeak);
+
+    curPeak = new THREE.Group();
 
     // suggestion: move spheres which are already added, add spheres if you have too few, remove ifyou have too many
     // maybe too much adding and removing makes it slow..
@@ -144,6 +141,7 @@ App.views.trajectoryCube = (function() {
       }
     }
 
+    group.add(curPeak);
   }
 
 

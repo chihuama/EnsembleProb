@@ -78,7 +78,7 @@ var runFile = ["Pa_t100", "Pb_t100", "Pc_t100", "Pab_t100", "Pac_t100", "Pbc_t10
       }
     }
 
-    console.log(peaksData[0]);
+    // console.log(peaksData[0]);
 
     updateViewsWithData([probData, peaksData]);
   }
@@ -102,6 +102,7 @@ var runFile = ["Pa_t100", "Pb_t100", "Pc_t100", "Pab_t100", "Pac_t100", "Pbc_t10
     for (let view in views) {
       views[view].size = views[view].resize();
     }
+    App.timeSlider.resize();
   }
 
 
