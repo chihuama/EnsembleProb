@@ -10,7 +10,7 @@ App.views.peakShapes = (function() {
   let neighborsRowIndex = null; // 3x3
   let minVal = null;
   let maxVal = null;
-  let currentState = null;
+  let currentState = [0, 0];
   let currentRow = null;
   let currentTime = 0;
 
@@ -97,8 +97,14 @@ App.views.peakShapes = (function() {
           .range([y2-margin.bottom, y1+margin.top]);
 
         let pathFunc = d3.line()
-          .x(function(d, i) { return xScale(i)})
-          .y(function(d, i) { return yScale(d)})
+          .x(function(d, i) { return xScale(i) })
+          .y(function(d, i) { return yScale(d) })
+          .curve(d3.curveMonotoneX);
+
+        let areaFunc = d3.area()
+          .x(function(d, i) { return xScale(i) })
+          .y0(y2-margin.bottom)
+          .y1(function(d, i) { return yScale(d) })
           .curve(d3.curveMonotoneX);
 
         let probData = [];
@@ -122,6 +128,16 @@ App.views.peakShapes = (function() {
             return d.color;
           })
           .style("stroke-width", 2);
+
+        // let peakShapesArea = svg.append("path")
+        //   .data(shapeData)
+        //   .attr("class", "selectedStatePeakShapes")
+        //   .attr("d", (d) => {
+        //     return areaFunc(d.prob);
+        //   })
+        //   .style("fill", (d) => {
+        //     return d.color;
+        //   });
       }
     }
 
@@ -153,6 +169,8 @@ App.views.peakShapes = (function() {
     let xSize = App.data.stateSpaceSize.oneD[App.currentProjection.x];
     currentRow = currentState[1] * xSize + currentState[0];
 
+    neighborsRowIndex = [];
+
     /* 0 1 2
        3 4 5
        6 7 8 */
@@ -179,7 +197,7 @@ App.views.peakShapes = (function() {
     neighborsRowIndex = [];
 
     // initialize the state [x, y]
-    setState([10, 3]);
+    // setState([10, 3]);
   }
 
   function setTimestep(timestep) {
