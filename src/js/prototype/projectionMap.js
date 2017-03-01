@@ -59,11 +59,11 @@ App.views.projectionMap = (function() {
 
     let radiusScale = d3.scaleLinear()
       .domain([1, 6])
-      .range([gridSize/6, gridSize]);
+      .range([gridSize/3, 2*gridSize/3]);
 
     let colorScale = d3.scaleOrdinal()
-      .domain(d3.range(1,6))
-      .range(['#ffffb2','#fed976','#feb24c','#fd8d3c','#f03b20','#bd0026']);
+      .domain(d3.range(0,6))
+      .range(['#66c2a5','#fc8d62','#8da0cb','#e78ac3','#a6d854','#ffd92f']);
 
     let xStart = d3.max([Math.ceil(gridDimensions.width[0]), 0]),
       xEnd = d3.min([Math.floor(gridDimensions.width[1]), stateSpaceSize.x]);
@@ -77,24 +77,20 @@ App.views.projectionMap = (function() {
 
       // horizontal lines
       for (let y = yStart; y <= yEnd; y++) {
-        grid.append("line")
+        for (let x = xStart; x <= xEnd; x++) {
+        grid.append("rect")
+          .datum({x: x, y: y})
           .attr("class", targetElement + "_horizLine")
-          .attr("x1", xScale(xStart))
-          .attr("x2", xScale(xEnd))
-          .attr("y2", yScale(y))
-          .attr("y1", yScale(y))
-          .style("stroke", "#AAA");
-      }
-
-      for (let x = xStart; x <= xEnd; x++) {
-        // vertical lines
-        grid.append("line")
-          .attr("class", targetElement + "_vertLine")
-          .attr("x1", xScale(x))
-          .attr("x2", xScale(x))
-          .attr("y1", yScale(yStart))
-          .attr("y2", yScale(yEnd))
-          .style("stroke", "#AAA");
+          .attr("x", xScale(x))
+          .attr("y", yScale(y))
+          .attr("width", gridSize)
+          .attr("height", gridSize)
+          .style("stroke", "#AAA")
+          .style("fill", "#DDD")
+          .on("click", function(d, i) {
+            console.log("Click on Grid Space:", d);
+          });
+        }
       }
     }
 
@@ -109,18 +105,87 @@ App.views.projectionMap = (function() {
     peakUpdate.exit().remove();
 
     peaks.selectAll(".peak")
-      .attr("cx", (d) => xScale(d.coord.x) + gridSize/2)
-      .attr("cy", (d) => yScale(d.coord.y) + gridSize/2)
-      .attr("r", (d) => radiusScale(d.runs.length))
-      .style("fill", (d) => colorScale(d.runs.length));
+      .attr("transform", (d) => "translate(" + (xScale(d.coord.x) + gridSize/2) + "," + (yScale(d.coord.y) + gridSize/2) + ")")
+      .each(function(d, i) {
+        // remove old arcs
+        d3.select(this).selectAll("*").remove();
 
-    peakUpdate.enter().append("circle")
+        let numRuns = d.runs.length;
+
+        let outerRadius = radiusScale(numRuns); // 3px padding
+        let innerRadius = 0;
+
+        // create background
+        d3.select(this).append("circle")
+          .attr("r", radiusScale(numRuns))
+          .style("fill", "#BBB")
+          .style("stroke", "#888")
+          .on("click", function(d, i) {
+            console.log("Click on Pie:", d);
+          });
+
+        // create new arcs
+        let arc = d3.arc();
+        let arcAngle = (2 * Math.PI) / numRuns;
+
+        d3.select(this).selectAll(".arc")
+          .data(d.runs).enter()
+        .append("path")
+          .attr("class", ".arc")
+          .attr("d", function(d, i) {
+            return arc({
+              innerRadius: innerRadius,
+              outerRadius: outerRadius,
+              startAngle: i * arcAngle,
+              endAngle: (i+1) * arcAngle
+            });
+          })
+          .style("fill", colorScale)
+          .style("stroke", "#444")
+          .style("pointer-events", "none");
+      });
+
+    peakUpdate.enter().append("g")
       .attr("class", "peak")
-      .attr("cx", (d) => xScale(d.coord.x) + gridSize/2)
-      .attr("cy", (d) => yScale(d.coord.y) + gridSize/2)
-      .attr("r", (d) => radiusScale(d.runs.length))
-      .style("fill", (d) => colorScale(d.runs.length))
-      .style("stroke", "black");
+      .attr("transform", (d) => "translate(" + (xScale(d.coord.x) + gridSize/2) + "," + (yScale(d.coord.y) + gridSize/2) + ")")
+      .each(function(d, i) {
+        // remove old arcs
+        d3.select(this).selectAll("*").remove();
+
+        let numRuns = d.runs.length;
+
+        let outerRadius = radiusScale(numRuns); // 3px padding
+        let innerRadius = 0;
+
+        // create background
+        d3.select(this).append("circle")
+          .attr("r", radiusScale(numRuns))
+          .style("fill", "#BBB")
+          .style("stroke", "#888")
+          .on("click", function(d, i) {
+            console.log("Click on Pie:", d);
+          });
+
+        // create new arcs
+        let arc = d3.arc();
+        let arcAngle = (2 * Math.PI) / numRuns;
+
+        d3.select(this).selectAll(".arc")
+          .data(d.runs).enter()
+        .append("path")
+          .attr("class", ".arc")
+          .attr("d", function(d, i) {
+            return arc({
+              innerRadius: innerRadius,
+              outerRadius: outerRadius,
+              startAngle: i * arcAngle,
+              endAngle: (i+1) * arcAngle
+            });
+          })
+          .style("fill", colorScale)
+          .style("stroke", "#444")
+          .style("pointer-events", "none");
+      });
 
 
   }
