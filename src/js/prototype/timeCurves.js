@@ -10,7 +10,7 @@ App.views.timeCurves = (function() {
 
   let tcData = null;
   let maxProb = null;
-  let currentState = null;
+  let currentState = [0, 0];
   let currentRow = null;
   let currentTime = 0;
 
@@ -113,7 +113,6 @@ App.views.timeCurves = (function() {
     for (let i = 0; i < tcData.length; i++) {
       max[i] = findMax(tcData[i], currentRow, 2);
     }
-
     // console.log(d3.max(max));
     // console.log(Math.ceil(d3.max(max) * 1000) / 1000);
 
@@ -145,7 +144,7 @@ App.views.timeCurves = (function() {
     tcData = data[0][index];
 
     // initialize the state [x, y]
-    setState([10, 3]);
+    // setState([10, 3]);
   }
 
   function resize() {
