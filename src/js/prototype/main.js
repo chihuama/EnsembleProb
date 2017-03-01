@@ -29,6 +29,7 @@ var runFile = ["Pa_t100", "Pb_t100", "Pc_t100", "Pab_t100", "Pac_t100", "Pbc_t10
     App.views.projectionMap.create("projectionMap");
     App.views.timeCurves.create("timeCurves");
     App.views.peakShapes.create("peakShapes");
+    App.views.projectionMap.stateUpdateCallback(updateViewsWithStateSelection);
 
     // time slider
     App.timeSlider = new timeSlider("#timeSlider", 0);
@@ -186,6 +187,12 @@ var runFile = ["Pa_t100", "Pb_t100", "Pc_t100", "Pab_t100", "Pac_t100", "Pbc_t10
     App.views.projectionMap.setTimestep(timestep);
     App.views.timeCurves.setTimestep(timestep);
     App.views.peakShapes.setTimestep(timestep);
+  }
+
+  function updateViewsWithStateSelection(state) {
+    console.log("callback");
+    App.views.timeCurves.setState(state);
+    App.views.peakShapes.setState(state);
   }
 
 })();

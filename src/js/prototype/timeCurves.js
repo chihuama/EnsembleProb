@@ -25,7 +25,7 @@ App.views.timeCurves = (function() {
       .attr("width", size.width)
       .attr("height", size.height)
       .attr("viewBox", "0 0 " + size.width + " " + size.height)
-      .style("background", "#555");
+      .style("background", "#EEE");
 
     // resize();
     // draw();
@@ -35,8 +35,9 @@ App.views.timeCurves = (function() {
 
     if (!tcData && !currentState) return;
 
-    let colors = ["#1b9e77", "#d95f02", "#6159C9", "#e7298a", "#66a61e", "#e6ab02"];
-    
+    // let colors = ["#1b9e77", "#d95f02", "#6159C9", "#e7298a", "#66a61e", "#e6ab02"];
+    let colors = ['#66c2a5','#fc8d62','#8da0cb','#e78ac3','#a6d854','#ffd92f'];
+
     let timeCurvesData = [];
 
     for (let i = 0; i < tcData.length; i++) {
@@ -101,7 +102,7 @@ App.views.timeCurves = (function() {
       .attr("y1", size.height-margin.bottom)
       .attr("x2", xScale(currentTime))
       .attr("y2", margin.top)
-      .style("stroke", "white")
+      .style("stroke", "#444")
       .style("stroke-width", 1);
   }
 
@@ -136,7 +137,7 @@ App.views.timeCurves = (function() {
     currentState = state;
     currentRow = currentState[1] * App.data.stateSpaceSize.oneD[App.currentProjection.x] + currentState[0];
 
-    // draw();
+    draw();
   }
 
   function setData(data) {

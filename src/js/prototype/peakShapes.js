@@ -25,7 +25,7 @@ App.views.peakShapes = (function() {
       .attr("width", size.width)
       .attr("height", size.height)
       .attr("viewBox", "0 0 " + size.width + " " + size.height)
-      .style("background", "#999");
+      .style("background", "#EEE");
 
     // resize();
     // draw();
@@ -70,13 +70,14 @@ App.views.peakShapes = (function() {
 
   function drawShapes() {
     d3.selectAll(".selectedStatePeakShapes").remove();
-    
-    let colors = ["#1b9e77", "#d95f02", "#6159C9", "#e7298a", "#66a61e", "#e6ab02"];
+
+    // let colors = ["#1b9e77", "#d95f02", "#6159C9", "#e7298a", "#66a61e", "#e6ab02"];
+    let colors = ['#66c2a5','#fc8d62','#8da0cb','#e78ac3','#a6d854','#ffd92f'];
 
     let margin = {
-      left: (size.width / (psData.length + 1)) * 0.03,
-      right: (size.width / (psData.length + 1)) * 0.03,
-      top: (size.height / 4) * 0.03,
+      left: (size.width / (psData.length + 1)) * 0.04,
+      right: (size.width / (psData.length + 1)) * 0.04,
+      top: (size.height / 4) * 0.04,
       bottom: (size.height / 4) * 0.02
     }
 
@@ -89,7 +90,7 @@ App.views.peakShapes = (function() {
 
         let xScale = d3.scaleLinear()
           .domain([0, 2])
-          .range([x1-margin.left, x2-margin.right]);
+          .range([x1+margin.left, x2-margin.right]);
 
         let yScale = d3.scaleLinear()
           .domain([minVal, maxVal])
@@ -97,7 +98,8 @@ App.views.peakShapes = (function() {
 
         let pathFunc = d3.line()
           .x(function(d, i) { return xScale(i)})
-          .y(function(d, i) { return yScale(d)});
+          .y(function(d, i) { return yScale(d)})
+          .curve(d3.curveMonotoneX);
 
         let probData = [];
         probData.push(+d3.values(psData[i][neighborsRowIndex[j]])[currentTime+2]);
@@ -106,10 +108,6 @@ App.views.peakShapes = (function() {
 
         let shapeData = [];
         shapeData.push({run: i, prob: probData, color: colors[i]});
-
-        console.log(shapeData);
-
-        // d3.selectAll(".selectedStatePeakShapes").remove();
 
         let peakShapes = svg.append("g").selectAll("path")
           .data(shapeData)
@@ -142,12 +140,11 @@ App.views.peakShapes = (function() {
       max[i] = d3.max(probValue[i]);
     }
 
-    // minVal = d3.min(min);
     minVal = Math.floor(d3.min(min) * 1000) / 1000;
     maxVal = Math.ceil(d3.max(max) * 1000) / 1000;
 
-    console.log("min: ", minVal);
-    console.log("max: ", maxVal);
+    // console.log("min: ", minVal);
+    // console.log("max: ", maxVal);
   }
 
   function setState(state) {
@@ -169,10 +166,10 @@ App.views.peakShapes = (function() {
     neighborsRowIndex.push( (currentState[1]-1) * xSize + currentState[0] );  // 7: i, j-1
     neighborsRowIndex.push( (currentState[1]-1) * xSize + (currentState[0]+1) );  // 8: i+1, j-1
 
-    console.log(neighborsRowIndex);
+    // console.log(neighborsRowIndex);
 
     calMinMax();
-    // draw();
+    drawShapes();
   }
 
   function setData(data) {
@@ -222,6 +219,7 @@ App.views.peakShapes = (function() {
     setData: setData,
     getSize: getSize,
     setTimestep: setTimestep,
+    setState: setState
   };
 
 })();

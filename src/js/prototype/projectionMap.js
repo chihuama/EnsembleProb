@@ -15,6 +15,8 @@ App.views.projectionMap = (function() {
   let xProjection = 1;
   let yProjection = 0;
 
+  let updateCallback = null;
+
 
   function setupView(targetID) {
     targetElement = d3.select("#" + targetID);
@@ -80,7 +82,7 @@ App.views.projectionMap = (function() {
         for (let x = xStart; x <= xEnd; x++) {
         grid.append("rect")
           .datum({x: x, y: y})
-          .attr("class", targetElement + "_horizLine")
+          .attr("class", "gridSpace")
           .attr("x", xScale(x))
           .attr("y", yScale(y))
           .attr("width", gridSize)
@@ -89,9 +91,21 @@ App.views.projectionMap = (function() {
           .style("fill", "#DDD")
           .on("click", function(d, i) {
             console.log("Click on Grid Space:", d);
+            updateCallback([d.x, d.y]);
           });
         }
       }
+      grid.append("rect")
+        .attr("class", "stateSpaceBoundary")
+        .attr("width", (stateSpaceSize.x + 1) * gridSize)
+        .attr("height", (stateSpaceSize.y + 1) * gridSize)
+        .attr("x", xScale(0))
+        .attr("y", yScale(stateSpaceSize.y))
+        .style("fill-opacity", 0)
+        .style("stroke", "#888")
+        .style("stroke-width", 3)
+        .style("pointer-events", "none");
+
     }
 
     if (!peaks) {
@@ -108,7 +122,7 @@ App.views.projectionMap = (function() {
       .attr("transform", (d) => "translate(" + (xScale(d.coord.x) + gridSize/2) + "," + (yScale(d.coord.y) + gridSize/2) + ")")
       .each(function(d, i) {
         // remove old arcs
-        d3.select(this).selectAll("*").remove();
+        d3.select(this).selectAll(".arc").remove();
 
         let numRuns = d.runs.length;
 
@@ -116,13 +130,8 @@ App.views.projectionMap = (function() {
         let innerRadius = 0;
 
         // create background
-        d3.select(this).append("circle")
-          .attr("r", radiusScale(numRuns))
-          .style("fill", "#BBB")
-          .style("stroke", "#888")
-          .on("click", function(d, i) {
-            console.log("Click on Pie:", d);
-          });
+        d3.select(this).select("circle")
+          .attr("r", radiusScale(numRuns));
 
         // create new arcs
         let arc = d3.arc();
@@ -131,7 +140,7 @@ App.views.projectionMap = (function() {
         d3.select(this).selectAll(".arc")
           .data(d.runs).enter()
         .append("path")
-          .attr("class", ".arc")
+          .attr("class", "arc")
           .attr("d", function(d, i) {
             return arc({
               innerRadius: innerRadius,
@@ -150,7 +159,7 @@ App.views.projectionMap = (function() {
       .attr("transform", (d) => "translate(" + (xScale(d.coord.x) + gridSize/2) + "," + (yScale(d.coord.y) + gridSize/2) + ")")
       .each(function(d, i) {
         // remove old arcs
-        d3.select(this).selectAll("*").remove();
+        // d3.select(this).selectAll(".arc").remove();
 
         let numRuns = d.runs.length;
 
@@ -164,6 +173,7 @@ App.views.projectionMap = (function() {
           .style("stroke", "#888")
           .on("click", function(d, i) {
             console.log("Click on Pie:", d);
+            updateCallback([d.coord.x, d.coord.y]);
           });
 
         // create new arcs
@@ -173,7 +183,7 @@ App.views.projectionMap = (function() {
         d3.select(this).selectAll(".arc")
           .data(d.runs).enter()
         .append("path")
-          .attr("class", ".arc")
+          .attr("class", "arc")
           .attr("d", function(d, i) {
             return arc({
               innerRadius: innerRadius,
@@ -186,7 +196,6 @@ App.views.projectionMap = (function() {
           .style("stroke", "#444")
           .style("pointer-events", "none");
       });
-
 
   }
 
@@ -296,12 +305,17 @@ App.views.projectionMap = (function() {
     return size;
   }
 
+  function stateUpdateCallback(callback) {
+    updateCallback = callback;
+  }
+
   // return public methods
   return {
     // public methods
     create: setupView,
     draw: draw,
     resize: resize,
+    stateUpdateCallback: stateUpdateCallback,
     // getter / setter
     setData: setData,
     setTimestep: setTimestep,
