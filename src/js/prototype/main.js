@@ -185,6 +185,7 @@ var runFile = ["Pa_t100", "Pb_t100", "Pc_t100", "Pab_t100", "Pac_t100", "Pbc_t10
     App.views.trajectoryCube.updateTimeSelector(timestep);
     App.views.projectionMap.setTimestep(timestep);
     App.views.timeCurves.setTimestep(timestep);
+    App.views.peakShapes.setTimestep(timestep);
   }
 
 })();

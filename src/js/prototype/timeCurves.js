@@ -36,6 +36,7 @@ App.views.timeCurves = (function() {
     if (!tcData && !currentState) return;
 
     let colors = ["#1b9e77", "#d95f02", "#6159C9", "#e7298a", "#66a61e", "#e6ab02"];
+    
     let timeCurvesData = [];
 
     for (let i = 0; i < tcData.length; i++) {
