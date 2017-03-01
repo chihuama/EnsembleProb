@@ -59,7 +59,7 @@ App.views.projectionMap = (function() {
 
     let radiusScale = d3.scaleLinear()
       .domain([1, 6])
-      .range([gridSize/3, gridSize]);
+      .range([gridSize/3, 2*gridSize/3]);
 
     let colorScale = d3.scaleOrdinal()
       .domain(d3.range(0,6))
@@ -119,7 +119,10 @@ App.views.projectionMap = (function() {
         d3.select(this).append("circle")
           .attr("r", radiusScale(numRuns))
           .style("fill", "#BBB")
-          .style("stroke", "#888");
+          .style("stroke", "#888")
+          .on("click", function(d, i) {
+            console.log("Click on Pie:", d);
+          });
 
         // create new arcs
         let arc = d3.arc();
@@ -158,7 +161,10 @@ App.views.projectionMap = (function() {
         d3.select(this).append("circle")
           .attr("r", radiusScale(numRuns))
           .style("fill", "#BBB")
-          .style("stroke", "#888");
+          .style("stroke", "#888")
+          .on("click", function(d, i) {
+            console.log("Click on Pie:", d);
+          });
 
         // create new arcs
         let arc = d3.arc();
