@@ -3,7 +3,7 @@ App.views = App.views || {};
 
 App.views.peakShapes = (function() {
   let targetElement = null;
-
+  let svg = null;
   let size = null;
 
   let psData = null;
@@ -37,6 +37,7 @@ App.views.peakShapes = (function() {
 
     drawGrid();
     drawShapes();
+    drawLegend();
   }
 
   function drawGrid() {
@@ -129,18 +130,53 @@ App.views.peakShapes = (function() {
           })
           .style("stroke-width", 2);
 
-        // let peakShapesArea = svg.append("path")
-        //   .data(shapeData)
-        //   .attr("class", "selectedStatePeakShapes")
-        //   .attr("d", (d) => {
-        //     return areaFunc(d.prob);
-        //   })
-        //   .style("fill", (d) => {
-        //     return d.color;
-        //   });
+        let peakShapesArea = svg.append("path")
+          .data(shapeData)
+          .attr("class", "selectedStatePeakShapes")
+          .attr("d", (d) => {
+            return areaFunc(d.prob);
+          })
+          .style("fill", (d) => {
+            return d.color;
+          });
       }
     }
 
+  }
+
+  function drawLegend() {
+    let x = size.width / (psData.length + 1);
+    let y = size.height / 4;
+
+    for (let i = 0; i < 4; i++) {
+      let s = svg.append("rect")
+        .attr("x", x/2 - x/8)
+        .attr("y", y*i + y/2 - x/8)
+        .attr("width", x/4)
+        .attr("height", x/4)
+        .style("fill", "none")
+        .style("stroke", "black")
+        .style("stroke-width", 1);
+
+      // 0-4-8, 1-4-7, 2-4-6, 3-4-5
+      let sL = svg.append("rect")
+        .attr("x", (x/2 - x/8 - x/4) + (i%3)*x/4 )
+        .attr("y", (y*i + y/2 - x/8 - x/4) + Math.floor(i/3)*x/4 )
+        .attr("width", x/4)
+        .attr("height", x/4)
+        .style("fill", "none")
+        .style("stroke", "black")
+        .style("stroke-width", 1);
+
+      let sR = svg.append("rect")
+        .attr("x", (x/2 - x/8 + x/4) - (i%3)*x/4 )
+        .attr("y", (y*i + y/2 - x/8 + x/4) - Math.floor(i/3)*x/4 )
+        .attr("width", x/4)
+        .attr("height", x/4)
+        .style("fill", "none")
+        .style("stroke", "black")
+        .style("stroke-width", 1);
+    }
   }
 
   function calMinMax() {
@@ -194,10 +230,11 @@ App.views.peakShapes = (function() {
     let index = (FILE_NUM/2 - 1) + App.currentProjection.y + App.currentProjection.x;
     psData = data[0][index];
 
-    neighborsRowIndex = [];
+    // neighborsRowIndex = [];
 
     // initialize the state [x, y]
     // setState([10, 3]);
+    setState(currentState);
   }
 
   function setTimestep(timestep) {
