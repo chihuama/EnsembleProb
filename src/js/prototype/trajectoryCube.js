@@ -99,7 +99,7 @@ App.views.trajectoryCube = (function() {
   function createTrajectory() {
     let colorMap = ['#ffffb2','#fed976','#feb24c','#fd8d3c','#f03b20','#bd0026'];
     // let materials = colorMap.map((hex) => new THREE.LineBasicMaterial({ color: hex, linewidth: 2 }));
-    let materials = colorMap.map((hex) => new THREE.LineBasicMaterial({ color: hex, linewidth: (colorMap.indexOf(hex) + 1) * 2 }));
+    let materials = colorMap.map((hex) => new THREE.LineBasicMaterial({ color: hex, linewidth: (colorMap.indexOf(hex) + 1) / 2}));
 
     if (timeStepTraj) {
       for (let t = 0; t < TIME_STEP - 1; t++) {
