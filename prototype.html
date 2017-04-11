@@ -12,18 +12,23 @@
     <!-- Latest compiled JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
+    <link rel="stylesheet" type="text/css" href="src/css/style.css">
+
     <script src="https://d3js.org/d3.v4.min.js" charset="utf-8"></script>
     <script src="https://d3js.org/queue.v1.min.js"></script>
     <script src="lib/three.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 
-    <script src="src/js/prototype/main.js" charset="utf-8"></script>
 
     <script src="src/js/peaks.js" charset="utf-8"></script>
+    <script src="src/js/prototype/main.js" charset="utf-8"></script>
     <script src="src/js/prototype/trajectoryCube.js" charset="utf-8"></script>
     <script src="src/js/prototype/projectionMap.js" charset="utf-8"></script>
     <script src="src/js/prototype/timeCurves.js" charset="utf-8"></script>
     <script src="src/js/prototype/peakShapes.js" charset="utf-8"></script>
     <script src="src/js/prototype/timeSlider.js" charset="utf-8"></script>
+    <script src="src/js/prototype/stateGlyph.js" charset="utf-8"></script>
+    <script src="src/js/prototype/surfaceView.js" charset="utf-8"></script>
 
   </head>
 
@@ -34,51 +39,118 @@
 
       </div>
 
-      <div class="row" id="allContent" style="padding-top: 15px; padding-bottom: 15px;">
+      <div class="row" id="allContent" style="padding-top: 10px; padding-bottom: 15px;">
 
         <div class="col-md-1">
-          <div class="contentDiv" id="timeSlider">
-
+          <div class="row">
+            <div class="col-md-12">
+              <div class="panel-heading subsecpanel">
+                <h5>timeSlider</h5>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="contentDiv" id="timeSlider">
+              </div>
+            </div>
           </div>
         </div>
 
         <div class="col-md-4">
-          <div class="contentDiv" id="trajectoryCube">
-
+          <div class="row">
+            <div class="col-md-12">
+              <div class="panel-heading subsecpanel">
+                <h5>trajectoryCube</h5>
+              </div>
+            </div>
           </div>
-          <div class="controldiv" id="button">
-            <input type="button" id="rotateButton" value="rotate" onclick="App.views.trajectoryCube.rotate(this.id, this.value)"></input>
-            <input type="button" value="zoom in" onclick="App.views.trajectoryCube.zoomIn()"></input>
-            <input type="button" value="zoom out" onclick="App.views.trajectoryCube.zoomOut()"></input>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="contentDiv" id="trajectoryCube">
+              </div>
+              <div class="controldiv" id="button">
+                <input type="button" id="rotateButton" value="rotate" onclick="App.views.trajectoryCube.rotate(this.id, this.value)"></input>
+                <input type="button" value="zoom in" onclick="App.views.trajectoryCube.zoomIn()"></input>
+                <input type="button" value="zoom out" onclick="App.views.trajectoryCube.zoomOut()"></input>
+              </div>
+            </div>
           </div>
         </div>
 
         <div class="col-md-4">
-          <div class="contentDiv" id="projectionMap">
-
+          <div class="row">
+            <div class="col-md-12">
+              <div class="panel-heading subsecpanel">
+                <h5>projectionMap</h5>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="contentDiv" id="projectionMap">
+              </div>
+            </div>
           </div>
         </div>
 
         <div class="col-md-3">
           <div class="row">
             <div class="col-md-12">
-              <div class="contentDiv" id="timeCurves">
-
+              <div class="panel-heading subsecpanel">
+                <h5>timeCurves</h5>
               </div>
-
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="contentDiv" id="timeCurves">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="panel-heading subsecpanel">
+                <h5>peakShapes</h5>
+              </div>
             </div>
           </div>
           <div class="row">
             <div class="col-md-12">
               <div class="contentDiv" id="peakShapes">
-
               </div>
-
             </div>
-
           </div>
+          <!-- <div class="row">
+            <div class="col-md-12">
+              <div class="contentDiv" id="stateGlyph">
+              </div>
+            </div>
+          </div> -->
         </div>
 
+      </div>
+
+      <div class="row" id="lastrow">
+        <div class="col-md-9">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="contentDiv" id="stateGlyph">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row" id="lastrow">
+        <div class="col-md-9">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="contentDiv" id="surface">
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
     </div>

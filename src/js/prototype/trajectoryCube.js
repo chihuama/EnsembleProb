@@ -19,6 +19,12 @@ App.views.trajectoryCube = (function() {
   let numY;
 
   let isRotating = false;
+  let isDragging = false;
+
+  let previousMousePos = {
+    x: 0,
+    y: 0
+  };
 
 
   function setupView(targetID) {
@@ -51,6 +57,28 @@ App.views.trajectoryCube = (function() {
     renderer = new THREE.WebGLRenderer();
     renderer.setSize(size.width, size.height);
     targetElement.appendChild(renderer.domElement);
+
+    $(renderer.domElement).on("mousedown", function(e) {
+      // console.log("mousedown");
+      // console.log(e.which);
+      d3.select('#trajectoryCube').style('cursor', 'ew-resize');
+      isDragging = true;
+    })
+    .on("mousemove", function(e) {
+      let deltaMove = {
+        x: e.offsetX - previousMousePos.x,
+        y: e.offsetY - previousMousePos.y
+      };
+
+      if (isDragging) {
+        // console.log("mousemove");
+        // group.rotation.z += (deltaMove.x * 0.1) * Math.PI/180;
+      }
+    })
+    .on("mouseup", function(e) {
+      isDragging = false;
+    });
+
   }
 
 
@@ -117,7 +145,6 @@ App.views.trajectoryCube = (function() {
 
 
   function highlightPeak(timestep) {
-
 
     curPeak.children.forEach((child) => {
       curPeak.remove(child);

@@ -81,6 +81,7 @@ App.views.timeCurves = (function() {
       .style("stroke-width", 2);
 
     drawTimeLine();
+    drawTitle();
   }
 
   function setTimestep(timestep) {
@@ -104,6 +105,17 @@ App.views.timeCurves = (function() {
       .attr("y2", margin.top)
       .style("stroke", "#444")
       .style("stroke-width", 1);
+  }
+
+  function drawTitle() {
+    d3.selectAll(".timeCurvesTitle").remove();
+    
+    let title = svg.append("text")
+      .attr("class", "timeCurvesTitle")
+      .attr("x", size.width/2)
+      .attr("y", margin.top)
+      .style("text-anchor", "middle")
+      .text(protein[App.currentProjection.y] + ": " + currentState[1] + ", " + protein[App.currentProjection.x] + ": " + currentState[0]);
   }
 
   // get max probability value at the current state from all runs
@@ -165,7 +177,7 @@ App.views.timeCurves = (function() {
     margin = {
       left: targetElement.node().clientWidth * 0.03,
       right: targetElement.node().clientWidth * 0.02,
-      top: targetElement.node().clientWidth * 0.04,
+      top: targetElement.node().clientWidth * 0.05,
       bottom: targetElement.node().clientWidth * 0.03
     };
   }
