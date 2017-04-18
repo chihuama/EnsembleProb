@@ -109,7 +109,7 @@ App.views.timeCurves = (function() {
 
   function drawTitle() {
     d3.selectAll(".timeCurvesTitle").remove();
-    
+
     let title = svg.append("text")
       .attr("class", "timeCurvesTitle")
       .attr("x", size.width/2)
@@ -156,7 +156,8 @@ App.views.timeCurves = (function() {
     tcData = data[0][index];
 
     // initialize the state [x, y]
-    // setState([10, 3]);
+    currentTime = 0;
+    setState([0, 0]);
   }
 
   function resize() {
