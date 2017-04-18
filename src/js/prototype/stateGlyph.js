@@ -48,7 +48,7 @@ App.views.stateGlyph = (function() {
         };
 
         let scale = d3.scaleLinear()
-            .domain([minVal, maxVal])
+            .domain([0, maxVal])
             .range([(size.height * 0.9 / 2) * 0.1, size.height * 0.9 / 2]);
 
         for (let i = 0; i < sgData.length; i++) {
@@ -117,7 +117,8 @@ App.views.stateGlyph = (function() {
         let index = (FILE_NUM / 2 - 1) + App.currentProjection.y + App.currentProjection.x;
         sgData = data[0][index];
 
-        setState(currentState);
+        currentTime = 0;
+        setState([0, 0]);
     }
 
     function setTimestep(timestep) {
@@ -215,8 +216,8 @@ App.views.stateGlyph = (function() {
             }
             // console.log(glyphVector[i]);
         }
-        console.log(neighborsIndex);
-        console.log(glyphVector);
+        // console.log(neighborsIndex);
+        // console.log(glyphVector);
         // A:3, C:9 : 0.012025238325095, 0.0150576218952293
         // A:2, C:9 : 0.0120266823517525, 0.0151262139833606
         calMinMax();

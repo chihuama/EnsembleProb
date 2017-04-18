@@ -43,8 +43,11 @@ timeSlider.prototype.drawSliderHandle = function() {
       _this.releaseHandle(this);
     });
 
+  d3.selectAll(".sliderHandel").remove();
+
   let handleY = (this.height - this.handleHeight) * (1 - this.curTime / (TIME_STEP-1));
   let sliderHandel = this.svg.append("rect")
+    .attr("class", "sliderHandel")
     .attr("x", this.width * 0.4)
     .attr("y", handleY)
     .attr("width", this.handleWidth)
@@ -123,9 +126,13 @@ timeSlider.prototype.attachTimeUpdateCallback = function(callback) {
   this.updateCallback = callback;
 };
 
+// timeSlider.prototype.onUpdate = function() {
+//   this.curTime = 0; // get time from slider position
+//
+//   this.updateCallback(this.curTime);
+// };
 
-timeSlider.prototype.onUpdate = function() {
-  this.curTime = 0; // get time from slider position
-
-  this.updateCallback(this.curTime);
-};
+timeSlider.prototype.reset = function() {
+  this.curTime = 0;
+  this.drawSliderHandle();
+}

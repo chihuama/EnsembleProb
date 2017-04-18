@@ -6,19 +6,21 @@
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
+    <link rel="stylesheet" type="text/css" href="src/css/style.css">
+
     <!-- jQuery library -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
     <!-- Latest compiled JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-    <link rel="stylesheet" type="text/css" href="src/css/style.css">
-
     <script src="https://d3js.org/d3.v4.min.js" charset="utf-8"></script>
     <script src="https://d3js.org/queue.v1.min.js"></script>
-    <script src="lib/three.min.js"></script>
+
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 
+    <script src="lib/three.min.js"></script>
+    <script src="lib/TrackballControls.js"></script>
 
     <script src="src/js/peaks.js" charset="utf-8"></script>
     <script src="src/js/prototype/main.js" charset="utf-8"></script>
@@ -28,7 +30,7 @@
     <script src="src/js/prototype/peakShapes.js" charset="utf-8"></script>
     <script src="src/js/prototype/timeSlider.js" charset="utf-8"></script>
     <script src="src/js/prototype/stateGlyph.js" charset="utf-8"></script>
-    <script src="src/js/prototype/surfaceView.js" charset="utf-8"></script>
+    <!-- <script src="src/js/prototype/surfaceView.js" charset="utf-8"></script> -->
 
   </head>
 
@@ -39,13 +41,29 @@
 
       </div>
 
+      <div class="dropdown">
+        <!-- <button class="dropbtn" onclick="selectProjection()"> Projection </button>
+        <div id="projectionDropdown" class="dropdown-content">
+          <a onclick="test()"> Protein A & B </a>
+          <a > Protein A & C </a>
+          <a > Protein B & C </a>
+        </div> -->
+        <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown"> Projection
+        <span class="caret"></span></button>
+        <ul class="dropdown-menu">
+          <li><a href="#" id="AB" onclick="selectProjection(this.id)"> Protein A & B </a></li>
+          <li><a href="#" id="AC" onclick="selectProjection(this.id)"> Protein A & C </a></li>
+          <li><a href="#" id="BC" onclick="selectProjection(this.id)"> Protein B & C </a></li>
+        </ul>
+      </div>
+
       <div class="row" id="allContent" style="padding-top: 10px; padding-bottom: 15px;">
 
         <div class="col-md-1">
           <div class="row">
             <div class="col-md-12">
               <div class="panel-heading subsecpanel">
-                <h5>timeSlider</h5>
+                <h5> Time Slider </h5>
               </div>
             </div>
           </div>
@@ -61,7 +79,7 @@
           <div class="row">
             <div class="col-md-12">
               <div class="panel-heading subsecpanel">
-                <h5>trajectoryCube</h5>
+                <h5> Peak Trajectory Cube </h5>
               </div>
             </div>
           </div>
@@ -70,9 +88,10 @@
               <div class="contentDiv" id="trajectoryCube">
               </div>
               <div class="controldiv" id="button">
-                <input type="button" id="rotateButton" value="rotate" onclick="App.views.trajectoryCube.rotate(this.id, this.value)"></input>
+                <!-- <input type="button" id="rotateButton" value="rotate" onclick="App.views.trajectoryCube.rotate(this.id, this.value)"></input>
                 <input type="button" value="zoom in" onclick="App.views.trajectoryCube.zoomIn()"></input>
-                <input type="button" value="zoom out" onclick="App.views.trajectoryCube.zoomOut()"></input>
+                <input type="button" value="zoom out" onclick="App.views.trajectoryCube.zoomOut()"></input> -->
+                <input type="button" value="Reset" onclick="App.views.trajectoryCube.reset()"></input>
               </div>
             </div>
           </div>
@@ -82,7 +101,7 @@
           <div class="row">
             <div class="col-md-12">
               <div class="panel-heading subsecpanel">
-                <h5>projectionMap</h5>
+                <h5> Peak Projection Map </h5>
               </div>
             </div>
           </div>
@@ -98,7 +117,7 @@
           <div class="row">
             <div class="col-md-12">
               <div class="panel-heading subsecpanel">
-                <h5>timeCurves</h5>
+                <h5> Time Curves </h5>
               </div>
             </div>
           </div>
@@ -111,7 +130,7 @@
           <div class="row">
             <div class="col-md-12">
               <div class="panel-heading subsecpanel">
-                <h5>peakShapes</h5>
+                <h5> Shape Glyphs 1 </h5>
               </div>
             </div>
           </div>
@@ -132,7 +151,14 @@
       </div>
 
       <div class="row" id="lastrow">
-        <div class="col-md-9">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="panel-heading subsecpanel">
+                <h5> Shape Glyphs 2 </h5>
+              </div>
+            </div>
+          </div>
           <div class="row">
             <div class="col-md-12">
               <div class="contentDiv" id="stateGlyph">
@@ -142,7 +168,7 @@
         </div>
       </div>
 
-      <div class="row" id="lastrow">
+      <!-- <div class="row" id="lastrow">
         <div class="col-md-9">
           <div class="row">
             <div class="col-md-12">
@@ -151,7 +177,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
 
     </div>
 

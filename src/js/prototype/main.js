@@ -31,7 +31,7 @@ var protein = ["ProteinA", "ProteinB", "ProteinC"];
         App.views.timeCurves.create("timeCurves");
         App.views.peakShapes.create("peakShapes");
         App.views.stateGlyph.create("stateGlyph");
-        App.views.surface.create("surface");
+        // App.views.surface.create("surface");
         App.views.projectionMap.stateUpdateCallback(updateViewsWithStateSelection);
 
         // time slider
@@ -158,11 +158,13 @@ var protein = ["ProteinA", "ProteinB", "ProteinC"];
 
         console.log("State space size:", App.data.stateSpaceSize);
 
-        updateViewsWithData([probData, peaksData]);
+        App.updateViewsWithData([probData, peaksData]);
     }
 
 
-    function updateViewsWithData(data) {
+    // function updateViewsWithData(data) {
+    App.updateViewsWithData = function (data) {
+
         let views = App.views;
 
         for (let view in views) {
@@ -201,3 +203,50 @@ var protein = ["ProteinA", "ProteinB", "ProteinC"];
     }
 
 })();
+
+
+// /* toggle between hiding and showing the dropdown content */
+// function selectProjection() {
+//   document.getElementById("projectionDropdown").classList.toggle("show");
+// }
+//
+// // close the dropdown menu if the user clicks outside of it
+// window.onclick = function(event) {
+//   if (!event.target.matches(".dropbtn")) {
+//     let dropdowns = document.getElementsByClassName("dropdown-content");
+//     for (let i = 0; i < dropdowns.length; i++) {
+//       let openDropdown = dropdowns[i];
+//       if (openDropdown.classList.contains('show')) {
+//         openDropdown.classList.remove('show');
+//       }
+//     }
+//   }
+// }
+
+
+function selectProjection(val) {
+
+  if (val === "AB")  {
+    App.currentProjection = {
+        x: 1,
+        y: 0
+    };
+  } else if (val === "AC") {
+    App.currentProjection = {
+        x: 2,
+        y: 0
+    };
+  } else if (val === "BC") {
+    App.currentProjection = {
+        x: 2,
+        y: 1
+    };
+  }
+
+  console.log(App.currentProjection);
+
+  App.timeSlider.reset();
+  App.views.trajectoryCube.reset();
+  App.views.projectionMap.reset();
+  App.updateViewsWithData([App.data.probData, App.data.peaksData]);
+}
