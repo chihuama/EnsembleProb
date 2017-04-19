@@ -1,126 +1,58 @@
 .panel-heading {
-  text-align: center;
-  background-color: none;
+    text-align: center;
+    background-color: none;
 }
 
 .titlepanel {
-  font-weight: bold;
-  /*padding: 3px;*/
+    font-weight: bold;
+    /*padding: 3px;*/
 }
 
 .subsecpanel {
-  background: none;
-  /*padding: 5px;*/
+    background: none;
+    /*padding: 5px;*/
 }
 
 .inputrow {
-  padding-left: 10px;
+    padding-left: 10px;
 }
 
-.inputrow>*{
-  margin-top: 5px;
-  margin-bottom: 5px;
+.inputrow>* {
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 
 .controldiv>.row {
-  margin: 0px;
+    margin: 0px;
 }
 
 .panel-body {
-  /*padding: 0px;*/
-  box-sizing: border-box;
+    /*padding: 0px;*/
+    box-sizing: border-box;
 }
 
 h3 {
-  font-weight: bold;
+    font-weight: bold;
 }
 
 h5 {
-  margin: 0px;
+    margin: 0px;
 }
 
 svg {
-  width: 100%;
-
-  /*background-color: #55AAAA;*/
-
-  box-sizing: border-box;
+    width: 100%;
+    /*background-color: #55AAAA;*/
+    box-sizing: border-box;
 }
 
-
-/*.dropdown {
-  position: relative;
-  display: inline-block;
-}*/
-
-/* Dropdown Button */
-/*.dropbtn {
-  background-color: #4CAF50;
-  color: white;
-  padding: 8px;
-  font-size: 16px;
-  border: none;
-  cursor: pointer;
-}*/
-
-/* Dropdown Content */
-/*.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: #f9f9f9;
-  min-width: 120px;
-  /*box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);*/
-/*  z-index: 1;
-}*/
-
-/* Links inside the dropdown */
-/*.dropdown-content a {
-  color: black;
-  padding: 8px;
-  text-decoration: none;
-  display: block;
-  cursor: pointer;
-}*/
-
-/* Change color od dropdown menu on hover */
-/*.dropdown-content a:hover {
-  background-color: #f1f1f1;
-}*/
-
-/* Show the dropdown menu on hover */
-/*.dropdown:hover .dropdown-content {
-  display: block;
-}*/
-
-/* Change the background color of the dropdown button when the dropdown content is shown */
-/*.dropdown:hover .dropbtn {
-  background-color: #3e8e41;
-}*/
-
-/* dropdown button on hover and focus */
-/*.dropbtn:hover .dropbtn:focus {
-  background-color: #3e8e41;
+.stop-left {
+    stop-color: #feb24c;
 }
 
-.show {
-  display: block;
-}*/
-
-
-/*.subdropbtn {
-  background-color: #f9f9f9;
-  color: black;
-  padding: 6px;
-  font-size: 12px;
-  border: none;
+.stop-right {
+    stop-color: #800026;
 }
 
-
-.dropbtn-legend {
-  background-color: #4caf50;
-  color: white;
-  padding: 8px;
-  font-size: 16px;
-  border: none;
-  cursor: pointer;
-}*/
+.filled {
+    fill: url(#mainGradient);
+}

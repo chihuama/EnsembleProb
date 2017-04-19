@@ -30,6 +30,7 @@
     <script src="src/js/prototype/peakShapes.js" charset="utf-8"></script>
     <script src="src/js/prototype/timeSlider.js" charset="utf-8"></script>
     <script src="src/js/prototype/stateGlyph.js" charset="utf-8"></script>
+    <script src="src/js/prototype/legend.js" charset="utf-8"></script>
     <!-- <script src="src/js/prototype/surfaceView.js" charset="utf-8"></script> -->
 
   </head>
@@ -41,20 +42,38 @@
 
       </div>
 
-      <div class="dropdown">
+      <!-- <div class="dropdown"> -->
         <!-- <button class="dropbtn" onclick="selectProjection()"> Projection </button>
         <div id="projectionDropdown" class="dropdown-content">
           <a onclick="test()"> Protein A & B </a>
           <a > Protein A & C </a>
           <a > Protein B & C </a>
         </div> -->
-        <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown"> Projection
+        <!-- <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown"> Projection
         <span class="caret"></span></button>
         <ul class="dropdown-menu">
           <li><a href="#" id="AB" onclick="selectProjection(this.id)"> Protein A & B </a></li>
           <li><a href="#" id="AC" onclick="selectProjection(this.id)"> Protein A & C </a></li>
           <li><a href="#" id="BC" onclick="selectProjection(this.id)"> Protein B & C </a></li>
         </ul>
+      </div> -->
+
+      <div class="row">
+        <div class="col-md-2">
+          <div class="dropdown">
+            <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown"> Projection
+            <span class="caret"></span></button>
+            <ul class="dropdown-menu">
+              <li><a href="#" id="AB" onclick="selectProjection(this.id)"> Protein A & B </a></li>
+              <li><a href="#" id="AC" onclick="selectProjection(this.id)"> Protein A & C </a></li>
+              <li><a href="#" id="BC" onclick="selectProjection(this.id)"> Protein B & C </a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-md-8">
+          <div class="contentDiv" id="legend">
+          </div>
+        </div>
       </div>
 
       <div class="row" id="allContent" style="padding-top: 10px; padding-bottom: 15px;">
@@ -91,7 +110,7 @@
                 <!-- <input type="button" id="rotateButton" value="rotate" onclick="App.views.trajectoryCube.rotate(this.id, this.value)"></input>
                 <input type="button" value="zoom in" onclick="App.views.trajectoryCube.zoomIn()"></input>
                 <input type="button" value="zoom out" onclick="App.views.trajectoryCube.zoomOut()"></input> -->
-                <input type="button" value="Reset" onclick="App.views.trajectoryCube.reset()"></input>
+                <input type="button" value="Reset" onclick="App.views.trajectoryCube.resetCamera()"></input>
               </div>
             </div>
           </div>

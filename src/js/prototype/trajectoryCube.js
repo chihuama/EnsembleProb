@@ -41,7 +41,7 @@ App.views.trajectoryCube = (function() {
         // resize();
 
         // rotate, zoom, pan
-        controls = new THREE.TrackballControls( camera, renderer.domElement );
+        controls = new THREE.TrackballControls(camera, renderer.domElement);
 
         controls.rotateSpeed = 0.8;
         controls.zoomSpeed = 1.2;
@@ -304,12 +304,14 @@ App.views.trajectoryCube = (function() {
         camera.position.z += 5;
     }
 
-    function reset() {
-      camera.position.set(0, 0, 80);
+    function resetCamera() {
+        camera.position.set(0, 0, 80);
+    }
 
-      for (let i = group.children.length - 1; i >= 0 ; i--) {
-        group.remove(group.children[i]);
-      }
+    function reset() {
+        for (let i = group.children.length - 1; i >= 0; i--) {
+            group.remove(group.children[i]);
+        }
     }
 
 
@@ -326,6 +328,7 @@ App.views.trajectoryCube = (function() {
         // rotate: rotate,
         // zoomIn: zoomIn,
         // zoomOut: zoomOut
+        resetCamera: resetCamera,
         reset: reset
     };
 

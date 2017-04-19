@@ -38,6 +38,8 @@ var protein = ["ProteinA", "ProteinB", "ProteinC"];
         App.timeSlider = new timeSlider("#timeSlider", 0);
         App.timeSlider.attachTimeUpdateCallback(updateViewsWithTimeSelection);
 
+        App.legend = new legend("#legend");
+
         // add event listener for resize
         window.addEventListener('resize', resizeViews);
     };
