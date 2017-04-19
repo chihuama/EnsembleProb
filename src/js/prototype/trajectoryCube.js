@@ -12,6 +12,9 @@ App.views.trajectoryCube = (function() {
 
     let timeSelector = null;
     let curPeak = null;
+    let area = null;
+    let xRange = null,
+        yRange = null;
 
     let size = null;
 
@@ -138,12 +141,34 @@ App.views.trajectoryCube = (function() {
         group.add(timeSelector);
 
         highlightPeak(timestep);
+        highlightArea(xRange, yRange, timestep);
     }
 
     function updateTimeSelector(timestep) {
         timeSelector.position.setY(timestep - TIME_STEP / 2);
 
         highlightPeak(timestep);
+        highlightArea(xRange, yRange, timestep);
+    }
+
+
+    function highlightArea(xRange, yRange, timestep) {
+      let numX = App.data.stateSpaceSize.oneD[App.currentProjection.x];
+      let numY = App.data.stateSpaceSize.oneD[App.currentProjection.y];
+      let box = new THREE.BoxGeometry( (xRange[1] - xRange[0]), 0.8, (yRange[1] - yRange[0]) );
+      let geometry = new THREE.EdgesGeometry( box );
+      let material = new THREE.LineBasicMaterial({
+        color: 0x3c66e6,
+        linewidth: 2
+      });
+      if (!area) {
+        area = new THREE.LineSegments( geometry, material );
+        area.position.x -= (numX) / 2;
+        area.position.x += xRange[0] + (xRange[1] - xRange[0]) / 2;
+        area.position.z += numY / 2;
+        area.position.z -= yRange[0] + (yRange[1] - yRange[0]) / 2;
+      }
+      timeSelector.add(area);
     }
 
 
@@ -263,11 +288,69 @@ App.views.trajectoryCube = (function() {
 
         // console.log(timeStepTraj);
 
+        /***** calculate the area shown in the peak projection map *****/
+        let xProjection = App.currentProjection && App.currentProjection.x != undefined ? App.currentProjection.x : 1;
+        let yProjection = App.currentProjection && App.currentProjection.y != undefined ? App.currentProjection.y : 0;
+
+        let maxPeakBound = App.data.projectionBounds.twoD[xProjection][yProjection];
+        let stateSpaceSize = App.data.stateSpaceSize.twoD[xProjection][yProjection];
+
+        // calculate what the shown dimensions will be (since the apsect ratios may be different)
+        let gridDimensions = calculateShownGridDimensions(maxPeakBound);
+
+        let xStart = d3.max([Math.ceil(gridDimensions.width[0]), 0]),
+            xEnd = d3.min([Math.floor(gridDimensions.width[1]), stateSpaceSize.x - 1]);
+
+        let yStart = d3.max([Math.ceil(gridDimensions.height[0]), 0]),
+            yEnd = d3.min([Math.floor(gridDimensions.height[1]), stateSpaceSize.y - 1]);
+
+        xRange = [xStart, xEnd];
+        yRange = [yStart, yEnd];
+
+        // console.log(xStart + " - " + xEnd);
+        // console.log(yStart + " - " + yEnd);
+
+        // console.log(xRange);
+        // console.log(yRange);
+
         createBoundingBox(x, y);
         createTrajectory();
         createTimeSelector(x, y, 0);
 
         render();
+    }
+
+
+    function calculateShownGridDimensions(projectionBounds) {
+        const svgAspect = size.width / size.height;
+        const dataAspect = (projectionBounds.x.max - projectionBounds.x.min) / (projectionBounds.y.max - projectionBounds.y.min);
+
+        const spacesShown = {};
+
+        // data is wider than svg
+        if (dataAspect >= svgAspect) {
+            // expand height, width stays same
+            spacesShown.width = [projectionBounds.x.min, projectionBounds.x.max];
+
+            const numSpacesHigh = (projectionBounds.x.max - projectionBounds.x.min) / svgAspect;
+
+            spacesShown.height = [
+                (projectionBounds.y.max + projectionBounds.y.min - numSpacesHigh) / 2,
+                (projectionBounds.y.max + projectionBounds.y.min + numSpacesHigh) / 2,
+            ];
+        } else {
+            // expand width, height stays same
+            spacesShown.height = [projectionBounds.y.min, projectionBounds.y.max];
+
+            const numSpacesWide = svgAspect * (projectionBounds.y.max - projectionBounds.y.min);
+
+            spacesShown.width = [
+                (projectionBounds.x.max + projectionBounds.x.min - numSpacesWide) / 2,
+                (projectionBounds.x.max + projectionBounds.x.min + numSpacesWide) / 2,
+            ];
+        }
+
+        return spacesShown;
     }
 
 
@@ -312,6 +395,7 @@ App.views.trajectoryCube = (function() {
         for (let i = group.children.length - 1; i >= 0; i--) {
             group.remove(group.children[i]);
         }
+        area = null;
     }
 
 
